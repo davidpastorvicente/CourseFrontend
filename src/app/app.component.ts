@@ -1,5 +1,6 @@
-import { Component, OnInit, ElementRef, HostListener, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import {Component, OnInit, ElementRef, HostListener, AfterViewInit, ViewChild, ChangeDetectorRef, Input} from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
+import {CrearComponent} from './crear/crear.component';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
+  @Input() crearComponent: CrearComponent;
 
   elements: any = [];
   headElements = ['titulo', 'profesor', 'nivel', 'horas'];
@@ -21,6 +23,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   maxVisibleItems = 8;
 
   constructor(private cdRef: ChangeDetectorRef) {}
+
 
   @HostListener('input') oninput() {
     this.mdbTablePagination.searchText = this.searchText;
@@ -75,5 +78,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.mdbTable.dataSourceChange().subscribe((data: any) => {
       console.log(data);
     });
+  }
+
+  crear() {
+    console.log('Click');
   }
 }

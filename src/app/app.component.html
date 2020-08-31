@@ -9,7 +9,7 @@
   <mdb-card class="mt-3">
     <mdb-card-body>
       <!--Table-->
-      <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" bordered="true" class="z-depth-1">
+      <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" bordered="true" class="z-depth-1 mb-4">
         <thead class="sticky-top">
         <tr>
           <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]"
@@ -34,7 +34,7 @@
         </tfoot>
       </table>
 
-      <a href="#" mdbBtn color="primary" mdbWavesEffect>Button</a>
+      <button mdbBtn color="primary" class="d-block m-auto" (click)="crear()" mdbWavesEffect>Nuevo Curso</button>
     </mdb-card-body>
   </mdb-card>
 </div>
