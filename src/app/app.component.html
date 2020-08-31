@@ -10,7 +10,7 @@
     <mdb-card-body>
       <!--Table-->
       <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" bordered="true" class="z-depth-1">
-        <thead class="sticky-top black white-text">
+        <thead class="sticky-top">
         <tr>
           <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="elements" [sortBy]="headElements[i]"
               scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
@@ -19,10 +19,10 @@
         </thead>
         <tbody #row>
         <tr mdbTableCol  *ngFor="let el of elements; let i = index">
-          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{el.id}}</th>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">{{el.first}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.last}}</td>
-          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.handle}}</td>
+          <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{el.titulo}}</th>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" class="red-text">{{el.profesor}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.nivel}}</td>
+          <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{el.horas}}</td>
         </tr>
         </tbody>
         <tfoot class="grey lighten-5 w-100">

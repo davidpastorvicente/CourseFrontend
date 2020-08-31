@@ -1,1 +1,18 @@
 /* You can add global styles to this file, and also import other style files */
+ul.pagination {
+  margin-bottom: 0;
+}
+
+thead tr th {
+  color: #fff !important;
+  background-color: cornflowerblue !important;
+  border: 0 !important;
+  border-radius: 5px !important;
+  mdb-icon {
+    margin-left: 8px;
+  }
+}
+
+tfoot tr td {
+  padding: 14px !important;
+}

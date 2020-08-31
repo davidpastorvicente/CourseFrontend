@@ -4,7 +4,7 @@ import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstra
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.scss']
 })
 
 export class AppComponent implements OnInit, AfterViewInit {
@@ -13,12 +13,12 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild('row', { static: true }) row: ElementRef;
 
   elements: any = [];
-  headElements = ['id', 'first', 'last', 'handle'];
+  headElements = ['titulo', 'profesor', 'nivel', 'horas'];
 
-  searchText: string = '';
+  searchText = '';
   previous: string;
 
-  maxVisibleItems: number = 8;
+  maxVisibleItems = 8;
 
   constructor(private cdRef: ChangeDetectorRef) {}
 
@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     for (let i = 1; i <= 25; i++) {
-      this.elements.push({id: i.toString(), first: 'Wpis ' + i, last: 'Last ' + i, handle: 'Handle ' + i});
+      this.elements.push({titulo: 'Titulo' + i, profesor: 'Profesor ' + i, nivel: 'Fasil', horas: '20'});
     }
 
     this.mdbTable.setDataSource(this.elements);
@@ -44,18 +44,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
-  addNewRow() {
-    this.mdbTable.addRow({
-      id: this.elements.length.toString(),
-      first: 'Wpis ' + this.elements.length,
-      last: 'Last ' + this.elements.length,
-      handle: 'Handle ' + this.elements.length
-    });
-    this.emitDataSourceChange();
-  }
-
   addNewRowAfter() {
-    this.mdbTable.addRowAfter(1, {id: '2', first: 'Nowy', last: 'Row', handle: 'Kopytkowy'});
+    this.mdbTable.addRowAfter(1, {titulo: '2', profesor: 'Nowy', nivel: 'Row', horas: 'Kopytkowy'});
     this.mdbTable.getDataSource().forEach((el: any, index: any) => {
       el.id = (index + 1).toString();
     });
@@ -73,7 +63,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   removeRow() {
     this.mdbTable.removeRow(1);
     this.mdbTable.getDataSource().forEach((el: any, index: any) => {
-      el.id = (index + 1).toString();
+      el.titulo = (index + 1).toString();
     });
     this.emitDataSourceChange();
     this.mdbTable.rowRemoved().subscribe((data: any) => {
