@@ -1,6 +1,7 @@
-import {Component, OnInit, ElementRef, HostListener, AfterViewInit, ViewChild, ChangeDetectorRef, Input} from '@angular/core';
+import { Component, OnInit, ElementRef, HostListener, AfterViewInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MdbTableDirective, MdbTablePaginationComponent } from 'angular-bootstrap-md';
-import {CrearComponent} from './crear/crear.component';
+import { HttpService } from './services/http.service';
+import { Curso } from './models/curso';
 
 @Component({
   selector: 'app-root',
@@ -12,9 +13,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
-  @Input() crearComponent: CrearComponent;
+  title = 'Gestor de cursos';
 
-  elements: any = [];
+  cursos: Curso[];
   headElements = ['titulo', 'profesor', 'nivel', 'horas'];
 
   searchText = '';
@@ -22,7 +23,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   maxVisibleItems = 8;
 
-  constructor(private cdRef: ChangeDetectorRef) {}
+  constructor(private cdRef: ChangeDetectorRef, private http: HttpService) {}
 
 
   @HostListener('input') oninput() {
@@ -30,13 +31,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-    for (let i = 1; i <= 25; i++) {
-      this.elements.push({titulo: 'Titulo' + i, profesor: 'Profesor ' + i, nivel: 'Fasil', horas: '20'});
-    }
-
-    this.mdbTable.setDataSource(this.elements);
-    this.elements = this.mdbTable.getDataSource();
-    this.previous = this.mdbTable.getDataSource();
+    this.http.getCursos()
+      .subscribe(data => {
+        this.cursos = data.filter(item => item.activo);
+        this.mdbTable.setDataSource(this.cursos);
+        this.cursos = this.mdbTable.getDataSource();
+        this.previous = this.mdbTable.getDataSource();
+      });
   }
 
   ngAfterViewInit() {
@@ -78,9 +79,5 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.mdbTable.dataSourceChange().subscribe((data: any) => {
       console.log(data);
     });
-  }
-
-  crear() {
-    console.log('Click');
   }
 }
