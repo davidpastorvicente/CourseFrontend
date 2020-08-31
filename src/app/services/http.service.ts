@@ -6,11 +6,14 @@ import {Curso} from '../models/curso';
   providedIn: 'root'
 })
 export class HttpService {
-  url = 'http://localhost:8080/cursos';
 
   constructor(private http: HttpClient) { }
 
   getCursos() {
-    return this.http.get<Curso[]>(this.url);
+    return this.http.get<Curso[]>('http://localhost:8080/cursos');
+  }
+
+  getProfesores() {
+    return this.http.get<Map<number, string>>('http://localhost:8080/profesores');
   }
 }

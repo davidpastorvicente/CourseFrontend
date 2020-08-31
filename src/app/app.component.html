@@ -4,7 +4,7 @@
 <mdb-navbar class="navbar navbar-expand-lg navbar-dark indigo justify-content-center">
       <a class="navbar-brand" href="#">Gestor de cursos</a>
 </mdb-navbar>
-<!--/.Navbar-->
+
 <div class="container">
   <mdb-card class="mt-3">
     <mdb-card-body>
@@ -12,8 +12,8 @@
       <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" bordered="true" class="z-depth-1 mb-4">
         <thead class="sticky-top">
         <tr>
-          <th *ngFor="let head of headElements; let i = index" [mdbTableSort]="cursos" [sortBy]="headElements[i]"
-              scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
+          <th *ngFor="let head of headers; let i = index" [mdbTableSort]="cursos" [sortBy]="headers[i]"
+              scope="col">{{head}} <mdb-icon fas icon="sort"></mdb-icon>
           </th>
         </tr>
         </thead>
@@ -34,8 +34,33 @@
         </tfoot>
       </table>
 
-      <button mdbBtn color="primary" class="d-block m-auto" mdbWavesEffect>Nuevo Curso</button>
+      <!-- Button trigger modal -->
+      <button mdbBtn type="button" class="btn btn-primary d-block m-auto" data-toggle="modal" data-target="#crearModal">
+        Crear Curso
+      </button>
     </mdb-card-body>
   </mdb-card>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="crearModal" tabindex="-1" role="dialog" aria-labelledby="crearLabel"
+     aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="crearLabel">Añadir curso</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button type="button" class="btn btn-primary">Añadir</button>
+      </div>
+    </div>
+  </div>
 </div>
 <!-- /Start your project here-->

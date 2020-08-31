@@ -2,7 +2,7 @@
 export class Curso {
   id: number;
   titulo: string;
-  profesor: number;
+  profesor;
   horas: number;
   nivel: string;
   activo: boolean;
