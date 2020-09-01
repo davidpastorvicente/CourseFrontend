@@ -1,0 +1,54 @@
+<button mdbBtn type="button" class="btn btn-primary d-block m-auto" (click)="basicModal.show()" mdbWavesEffect>
+  Crear Curso
+</button>
+
+<div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close pull-right" aria-label="Cerrar" (click)="basicModal.hide()">
+          <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title w-100" id="myModalLabel">Añadir curso</h4>
+      </div>
+      <div class="modal-body p-4">
+        <form>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="active">
+            <label class="custom-control-label" for="active">Activo</label>
+          </div>
+          <div class="md-form">
+            <input mdbInput type="text" name="text" [(ngModel)]="courseTitle" id="title" class="form-control">
+            <label for="title" class="">Título</label>
+          </div>
+          <div class="mb-4">
+            <label for="teacher">Profesor</label>
+            <select id="teacher" class="browser-default custom-select">
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+            </select>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label for="level">Nivel</label>
+              <select id="level" class="browser-default custom-select">
+                <option value="1">Básico</option>
+                <option value="2">Intermedio</option>
+                <option value="3">Avanzado</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="hours">Horas</label>
+              <input type="number" class="form-control" id="hours" value="25" mdbInput>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Cerrar</button>
+        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Añadir</button>
+      </div>
+    </div>
+  </div>
+</div>

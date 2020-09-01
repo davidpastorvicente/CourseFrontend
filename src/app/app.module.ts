@@ -9,10 +9,14 @@ import { AppComponent } from './app.component';
 
 import { MDBBootstrapModule } from 'angular-bootstrap-md';
 import { FormsModule } from '@angular/forms';
+import { ShowComponent } from './show/show.component';
+import { CreateComponent } from './create/create.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ShowComponent,
+    CreateComponent
   ],
   imports: [
     BrowserModule,
