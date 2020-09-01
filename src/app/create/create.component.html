@@ -1,9 +1,9 @@
-<button mdbBtn type="button" class="btn btn-primary d-block m-auto" (click)="basicModal.show()" mdbWavesEffect>
+<button mdbBtn type="button" class="btn btn-primary d-block m-auto create" (click)="basicModal.show()" mdbWavesEffect>
   Crear Curso
 </button>
 
 <div mdbModal #basicModal="mdbModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close pull-right" aria-label="Cerrar" (click)="basicModal.hide()">
@@ -23,16 +23,14 @@
           </div>
           <div class="mb-4">
             <label for="teacher">Profesor</label>
-            <select id="teacher" class="browser-default custom-select">
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+            <select id="teacher" class="custom-select">
+              <option *ngFor="let profesor of listProfesores" value="{{profesor[0]}}">{{profesor[1]}}</option>
             </select>
           </div>
           <div class="row">
             <div class="col">
               <label for="level">Nivel</label>
-              <select id="level" class="browser-default custom-select">
+              <select id="level" class="custom-select">
                 <option value="1">Básico</option>
                 <option value="2">Intermedio</option>
                 <option value="3">Avanzado</option>
@@ -45,9 +43,8 @@
           </div>
         </form>
       </div>
-      <div class="modal-footer">
-        <button type="button" mdbBtn color="secondary" class="waves-light" aria-label="Close" (click)="basicModal.hide()" mdbWavesEffect>Cerrar</button>
-        <button type="button" mdbBtn color="primary" class="relative waves-light" mdbWavesEffect>Añadir</button>
+      <div class="modal-footer p-4">
+        <button type="button" mdbBtn color="primary" class="relative waves-light m-auto" mdbWavesEffect>Añadir</button>
       </div>
     </div>
   </div>

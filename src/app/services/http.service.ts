@@ -16,4 +16,8 @@ export class HttpService {
   getProfesores() {
     return this.http.get<Map<number, string>>('http://localhost:8080/profesores');
   }
+
+  postCursos(curso: Curso) {
+    return this.http.post<Curso>('http://localhost:8080/cursos', curso);
+  }
 }
