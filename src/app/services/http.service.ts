@@ -20,6 +20,6 @@ export class HttpService {
   }
 
   postCursos(curso: Curso) {
-    this.http.post<Curso>('http://localhost:8080/cursos', curso).subscribe(() => this.subject.next());
+    this.http.post<Curso>('http://localhost:8080/cursos', curso).subscribe(c => this.subject.next(c));
   }
 }

@@ -23,7 +23,7 @@ export class ShowComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.initTable();
-    this.http.subject.subscribe(() => this.initTable());
+    this.http.subject.subscribe(c => this.addCurso(c as Curso));
   }
 
   ngAfterViewInit() {
@@ -42,5 +42,13 @@ export class ShowComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.cursos);
       });
     });
+  }
+
+  addCurso(c: Curso) {
+    if (c.activo) {
+      c.profesor = this.profesores[c.profesor];
+      this.cursos.push(c);
+      this.mdbTable.setDataSource(this.cursos);
+    }
   }
 }
