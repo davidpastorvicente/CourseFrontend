@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../services/http.service';
+import {Component, OnInit} from '@angular/core';
+import {HttpService} from '../services/http.service';
+import {Curso} from '../models/curso';
 
 @Component({
   selector: 'app-create',
@@ -8,9 +9,11 @@ import { HttpService } from '../services/http.service';
 })
 export class CreateComponent implements OnInit {
   listProfesores = [];
-  courseTitle: string;
+  curso: Curso;
 
-  constructor(private http: HttpService) { }
+  constructor(private http: HttpService) {
+    this.curso = new Curso('', 1, 25, 'Básico', true);
+  }
 
   ngOnInit(): void {
     this.http.getProfesores().subscribe(profesores => {
@@ -18,4 +21,7 @@ export class CreateComponent implements OnInit {
     });
   }
 
+  onSubmit() {
+    this.http.postCursos(this.curso);
+  }
 }

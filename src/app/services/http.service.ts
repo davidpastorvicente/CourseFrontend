@@ -1,11 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 import {Curso} from '../models/curso';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
+  subject = new Subject();
 
   constructor(private http: HttpClient) { }
 
@@ -18,6 +20,6 @@ export class HttpService {
   }
 
   postCursos(curso: Curso) {
-    return this.http.post<Curso>('http://localhost:8080/cursos', curso);
+    this.http.post<Curso>('http://localhost:8080/cursos', curso).subscribe(() => this.subject.next());
   }
 }

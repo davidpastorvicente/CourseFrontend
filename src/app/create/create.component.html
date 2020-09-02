@@ -14,37 +14,37 @@
       <div class="modal-body p-4">
         <form>
           <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="active">
+            <input type="checkbox" class="custom-control-input" id="active" name="active" [(ngModel)]="curso.activo">
             <label class="custom-control-label" for="active">Activo</label>
           </div>
           <div class="md-form">
-            <input mdbInput type="text" name="text" [(ngModel)]="courseTitle" id="title" class="form-control">
+            <input mdbInput type="text" name="title" [(ngModel)]="curso.titulo" id="title" class="form-control">
             <label for="title" class="">Título</label>
           </div>
           <div class="mb-4">
             <label for="teacher">Profesor</label>
-            <select id="teacher" class="custom-select">
-              <option *ngFor="let profesor of listProfesores" value="{{profesor[0]}}">{{profesor[1]}}</option>
+            <select id="teacher" class="custom-select" name="teacher" [(ngModel)]="curso.profesor">
+              <option *ngFor="let profesor of listProfesores" value={{profesor[0]}}>{{profesor[1]}}</option>
             </select>
           </div>
           <div class="row">
             <div class="col">
               <label for="level">Nivel</label>
-              <select id="level" class="custom-select">
-                <option value="1">Básico</option>
-                <option value="2">Intermedio</option>
-                <option value="3">Avanzado</option>
+              <select id="level" class="custom-select" name="level" [(ngModel)]="curso.nivel">
+                <option value="Básico">Básico</option>
+                <option value="Intermedio">Intermedio</option>
+                <option value="Avanzado">Avanzado</option>
               </select>
             </div>
             <div class="col">
               <label for="hours">Horas</label>
-              <input type="number" class="form-control" id="hours" value="25" mdbInput>
+              <input mdbInput type="number" name="hours" [(ngModel)]="curso.horas" class="form-control" id="hours" value="25">
             </div>
           </div>
         </form>
       </div>
       <div class="modal-footer p-4">
-        <button type="button" mdbBtn color="primary" class="relative waves-light m-auto" mdbWavesEffect>Añadir</button>
+        <button mdbBtn (click)="onSubmit(); basicModal.hide();" type="button" color="primary" class="relative waves-light m-auto" mdbWavesEffect>Añadir</button>
       </div>
     </div>
   </div>

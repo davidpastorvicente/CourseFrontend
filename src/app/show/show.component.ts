@@ -15,18 +15,15 @@ export class ShowComponent implements OnInit, AfterViewInit {
   @ViewChild('row', { static: true }) row: ElementRef;
 
   cursos: Curso[];
+  profesores: Map<number, string>;
   headers = ['Título', 'Profesor', 'Nivel', 'Horas'];
-  maxVisibleItems = 10;
+  maxVisibleItems = 5;
 
   constructor(private cdRef: ChangeDetectorRef, private http: HttpService) {}
 
   ngOnInit(): void {
-    this.http.getProfesores().subscribe(profesores =>
-      this.http.getCursos().subscribe(cursos => {
-        this.cursos = cursos.filter(item => item.activo);
-        this.cursos.forEach(item => item.profesor = profesores[item.profesor]);
-        this.mdbTable.setDataSource(this.cursos);
-      }));
+    this.initTable();
+    this.http.subject.subscribe(() => this.initTable());
   }
 
   ngAfterViewInit() {
@@ -36,4 +33,14 @@ export class ShowComponent implements OnInit, AfterViewInit {
     this.cdRef.detectChanges();
   }
 
+  initTable() {
+    this.http.getProfesores().subscribe(profesores => {
+      this.profesores = profesores;
+      this.http.getCursos().subscribe(cursos => {
+        this.cursos = cursos.filter(item => item.activo);
+        this.cursos.forEach(item => item.profesor = this.profesores[item.profesor]);
+        this.mdbTable.setDataSource(this.cursos);
+      });
+    });
+  }
 }

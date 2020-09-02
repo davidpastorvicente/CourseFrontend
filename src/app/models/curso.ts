@@ -6,4 +6,12 @@ export class Curso {
   horas: number;
   nivel: string;
   activo: boolean;
+
+  constructor(titulo: string, profesor, horas: number, nivel: string, activo: boolean) {
+    this.titulo = titulo;
+    this.profesor = profesor;
+    this.horas = horas;
+    this.nivel = nivel;
+    this.activo = activo;
+  }
 }
