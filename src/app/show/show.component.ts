@@ -14,26 +14,14 @@ export class ShowComponent implements OnInit, AfterViewInit {
   @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
   @ViewChild('row', { static: true }) row: ElementRef;
 
-  cursos: Curso[];
+  cursos: Curso[] = [];
   profesores: Map<number, string>;
-  headers = ['Título', 'Profesor', 'Nivel', 'Horas'];
+  headers = ['titulo', 'profesor', 'nivel', 'horas'];
   maxVisibleItems = 5;
 
   constructor(private cdRef: ChangeDetectorRef, private http: HttpService) {}
 
-  ngOnInit(): void {
-    this.initTable();
-    this.http.subject.subscribe(c => this.addCurso(c as Curso));
-  }
-
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
-  }
-
-  initTable() {
+  ngOnInit() {
     this.http.getProfesores().subscribe(profesores => {
       this.profesores = profesores;
       this.http.getCursos().subscribe(cursos => {
@@ -42,6 +30,15 @@ export class ShowComponent implements OnInit, AfterViewInit {
         this.mdbTable.setDataSource(this.cursos);
       });
     });
+
+    this.http.subject.subscribe(c => this.addCurso(c as Curso));
+  }
+
+  ngAfterViewInit() {
+    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
+    this.mdbTablePagination.calculateFirstItemIndex();
+    this.mdbTablePagination.calculateLastItemIndex();
+    this.cdRef.detectChanges();
   }
 
   addCurso(c: Curso) {

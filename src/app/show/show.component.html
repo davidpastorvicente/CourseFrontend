@@ -3,12 +3,12 @@
     <thead class="sticky-top">
     <tr>
       <th *ngFor="let head of headers; let i = index" [mdbTableSort]="cursos" [sortBy]="headers[i]"
-          scope="col">{{head}} <mdb-icon fas icon="sort"></mdb-icon>
+          scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
       </th>
     </tr>
     </thead>
     <tbody #row>
-    <tr mdbTableCol  *ngFor="let curso of cursos; let i = index">
+    <tr mdbTableCol *ngFor="let curso of cursos; let i = index">
       <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{curso.titulo}}</th>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.profesor}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.nivel}}</td>
