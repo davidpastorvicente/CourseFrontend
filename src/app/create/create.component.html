@@ -17,17 +17,19 @@
             <input type="checkbox" class="custom-control-input" id="active" name="active" [(ngModel)]="curso.activo">
             <label class="custom-control-label" for="active">Activo</label>
           </div>
+
           <div class="md-form">
             <input mdbInput type="text" name="title" [(ngModel)]="curso.titulo" id="title" class="form-control">
             <label for="title" class="">Título</label>
           </div>
-          <div class="mb-4">
-            <label for="teacher">Profesor</label>
-            <select id="teacher" class="custom-select" name="teacher" [(ngModel)]="curso.profesor">
-              <option *ngFor="let profesor of listProfesores" value={{profesor[0]}}>{{profesor[1]}}</option>
-            </select>
-          </div>
-          <div class="row">
+
+          <div class="row mb-4">
+            <div class="col">
+              <label for="teacher">Profesor</label>
+              <select id="teacher" class="custom-select" name="teacher" [(ngModel)]="curso.profesor">
+                <option *ngFor="let profesor of listProfesores" value={{profesor[0]}}>{{profesor[1]}}</option>
+              </select>
+            </div>
             <div class="col">
               <label for="level">Nivel</label>
               <select id="level" class="custom-select" name="level" [(ngModel)]="curso.nivel">
@@ -36,9 +38,19 @@
                 <option value="Avanzado">Avanzado</option>
               </select>
             </div>
-            <div class="col">
+          </div>
+
+          <div class="row">
+            <div class="col-3">
               <label for="hours">Horas</label>
               <input mdbInput type="number" name="hours" [(ngModel)]="curso.horas" class="form-control" id="hours" value="25">
+            </div>
+            <div class="col-9">
+              <label for="file">Temario</label>
+              <div class="custom-file">
+                <input type="file" class="custom-file-input" id="file" name="file" [(ngModel)]="fileTitle" lang="es" (change)="addTemario($event)">
+                <label class="custom-file-label" for="file">{{fileTitle}}</label>
+              </div>
             </div>
           </div>
         </form>

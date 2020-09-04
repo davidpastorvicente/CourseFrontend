@@ -2,6 +2,7 @@ import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChi
 import {MdbTableDirective, MdbTablePaginationComponent} from 'angular-bootstrap-md';
 import {HttpService} from '../services/http.service';
 import {Curso} from '../models/curso';
+import { saveAs } from 'file-saver';
 
 @Component({
   selector: 'app-show',
@@ -46,6 +47,13 @@ export class ShowComponent implements OnInit, AfterViewInit {
       c.profesor = this.profesores[c.profesor];
       this.cursos.push(c);
       this.mdbTable.setDataSource(this.cursos);
+    }
+  }
+
+  download(curso: Curso) {
+    if (curso.temario) {
+      const blob = new Blob([curso.temario]);
+      saveAs(blob, curso.titulo + '.pdf');
     }
   }
 }

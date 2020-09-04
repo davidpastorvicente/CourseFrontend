@@ -8,7 +8,7 @@
     </tr>
     </thead>
     <tbody #row>
-    <tr mdbTableCol *ngFor="let curso of cursos; let i = index">
+    <tr mdbTableCol *ngFor="let curso of cursos; let i = index" (click)="download(curso)">
       <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{curso.titulo}}</th>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.profesor}}</td>
       <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.nivel}}</td>

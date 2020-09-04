@@ -1,7 +1,8 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
-import {CreateComponent} from './create.component';
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {HttpClientTestingModule} from '@angular/common/http/testing';
+import {FormsModule} from '@angular/forms';
+import {MDBBootstrapModule} from 'angular-bootstrap-md';
+import {CreateComponent} from './create.component';
 
 describe('CreateComponent', () => {
   let component: CreateComponent;
@@ -10,7 +11,7 @@ describe('CreateComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CreateComponent],
-      imports: [HttpClientTestingModule, MDBBootstrapModule.forRoot()]
+      imports: [HttpClientTestingModule, FormsModule, MDBBootstrapModule.forRoot()]
     })
     .compileComponents();
   });

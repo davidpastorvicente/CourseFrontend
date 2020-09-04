@@ -6,6 +6,7 @@ export class Curso {
   horas: number;
   nivel: string;
   activo: boolean;
+  temario;
 
   constructor(titulo: string, profesor, horas: number, nivel: string, activo: boolean) {
     this.titulo = titulo;

@@ -22,4 +22,12 @@ export class HttpService {
   postCursos(curso: Curso) {
     this.http.post<Curso>('http://localhost:8080/cursos', curso).subscribe(c => this.subject.next(c));
   }
+
+  postTemario(file: File, id: number) {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+    formData.append('file', file);
+
+    this.http.put('http://localhost:8080/cursos', formData).subscribe(() => console.log('Hecho'));
+  }
 }
