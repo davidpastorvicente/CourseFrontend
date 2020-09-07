@@ -1,59 +1,34 @@
-import {AfterViewInit, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MdbTableDirective, MdbTablePaginationComponent} from 'angular-bootstrap-md';
-import {HttpService} from '../services/http.service';
-import {Curso} from '../models/curso';
-import { saveAs } from 'file-saver';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from '../services/http.service';
+import { Curso } from '../models/curso';
+import {CreateComponent} from '../create/create.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-show',
   templateUrl: './show.component.html',
-  styleUrls: ['./show.component.scss']
+  styleUrls: ['./show.component.sass']
 })
+export class ShowComponent implements OnInit {
 
-export class ShowComponent implements OnInit, AfterViewInit {
-  @ViewChild(MdbTableDirective, { static: true }) mdbTable: MdbTableDirective;
-  @ViewChild(MdbTablePaginationComponent, { static: true }) mdbTablePagination: MdbTablePaginationComponent;
-  @ViewChild('row', { static: true }) row: ElementRef;
-
-  cursos: Curso[] = [];
-  profesores: Map<number, string>;
+  cursos: Curso[];
   headers = ['titulo', 'profesor', 'nivel', 'horas'];
-  maxVisibleItems = 5;
 
-  constructor(private cdRef: ChangeDetectorRef, private http: HttpService) {}
+  constructor(private http: HttpService, public dialog: MatDialog) { }
 
-  ngOnInit() {
-    this.http.getProfesores().subscribe(profesores => {
-      this.profesores = profesores;
-      this.http.getCursos().subscribe(cursos => {
-        this.cursos = cursos.filter(item => item.activo);
-        this.cursos.forEach(item => item.profesor = this.profesores[item.profesor]);
-        this.mdbTable.setDataSource(this.cursos);
-      });
-    });
-
-    this.http.subject.subscribe(c => this.addCurso(c as Curso));
+  ngOnInit(): void {
+    this.http.getCursos().subscribe(cursos =>
+      this.cursos = cursos.filter(curso => curso.activo));
   }
 
-  ngAfterViewInit() {
-    this.mdbTablePagination.setMaxVisibleItemsNumberTo(this.maxVisibleItems);
-    this.mdbTablePagination.calculateFirstItemIndex();
-    this.mdbTablePagination.calculateLastItemIndex();
-    this.cdRef.detectChanges();
+  openDialog(): void {
+    const dialog = this.dialog.open(CreateComponent);
+    dialog.afterClosed().subscribe(curso => this.add(curso));
   }
 
-  addCurso(c: Curso) {
-    if (c.activo) {
-      c.profesor = this.profesores[c.profesor];
-      this.cursos.push(c);
-      this.mdbTable.setDataSource(this.cursos);
-    }
-  }
-
-  download(curso: Curso) {
-    if (curso.temario) {
-      const blob = new Blob([curso.temario]);
-      saveAs(blob, curso.titulo + '.pdf');
+  add(curso: Curso): void {
+    if (curso.activo) {
+      this.cursos.push(curso);
     }
   }
 }

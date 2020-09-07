@@ -1,14 +1,22 @@
-import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {HttpClientModule} from '@angular/common/http';
-import {HttpService} from './services/http.service';
+import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import {MDBBootstrapModule} from 'angular-bootstrap-md';
-import {AppComponent} from './app.component';
-import {ShowComponent} from './show/show.component';
-import {CreateComponent} from './create/create.component';
-import {FormsModule} from '@angular/forms';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { ShowComponent } from './show/show.component';
+import { CreateComponent } from './create/create.component';
+
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+
+
 
 @NgModule({
   declarations: [
@@ -18,12 +26,18 @@ import {FormsModule} from '@angular/forms';
   ],
   imports: [
     BrowserModule,
-    BrowserAnimationsModule,
-    MDBBootstrapModule.forRoot(),
+    AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    BrowserAnimationsModule,
+    NgbModule,
+    MatToolbarModule,
+    MatCardModule,
+    MatTableModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatCheckboxModule
   ],
-  providers: [HttpService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

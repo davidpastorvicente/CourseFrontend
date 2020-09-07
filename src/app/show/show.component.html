@@ -1,26 +1,28 @@
-<div class="table-responsive">
-  <table mdbTable #tableEl="mdbTable" stickyHeader="true" hover="true" striped="true" bordered="true" class="z-depth-1 mb-4">
-    <thead class="sticky-top">
-    <tr>
-      <th *ngFor="let head of headers; let i = index" [mdbTableSort]="cursos" [sortBy]="headers[i]"
-          scope="col">{{head | titlecase}} <mdb-icon fas icon="sort"></mdb-icon>
-      </th>
-    </tr>
-    </thead>
-    <tbody #row>
-    <tr mdbTableCol *ngFor="let curso of cursos; let i = index" (click)="download(curso)">
-      <th *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex" scope="row">{{curso.titulo}}</th>
-      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.profesor}}</td>
-      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.nivel}}</td>
-      <td *ngIf="i+1 >= mdbTablePagination.firstItemIndex && i < mdbTablePagination.lastItemIndex">{{curso.horas}}</td>
-    </tr>
-    </tbody>
-    <tfoot class="grey lighten-5 w-100">
-    <tr>
-      <td colspan="4">
-        <mdb-table-pagination [tableEl]="tableEl" paginationAlign="" [searchDataSource]="cursos"></mdb-table-pagination>
-      </td>
-    </tr>
-    </tfoot>
-  </table>
-</div>
+<table mat-table [dataSource]="cursos">
+  <ng-container matColumnDef="titulo">
+    <th mat-header-cell *matHeaderCellDef> Título </th>
+    <td mat-cell *matCellDef="let curso"> {{curso.titulo}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="profesor">
+    <th mat-header-cell *matHeaderCellDef> Profesor </th>
+    <td mat-cell *matCellDef="let curso"> {{curso.profesor.nombre + ' ' + curso.profesor.apellido}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="nivel">
+    <th mat-header-cell *matHeaderCellDef> Nivel </th>
+    <td mat-cell *matCellDef="let c"> {{c.nivel}} </td>
+  </ng-container>
+
+  <ng-container matColumnDef="horas">
+    <th mat-header-cell *matHeaderCellDef> Horas </th>
+    <td mat-cell *matCellDef="let curso"> {{curso.horas}} </td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="headers"></tr>
+  <tr mat-row *matRowDef="let row; columns: headers;"></tr>
+</table>
+
+<!-- Crear un curso -->
+<button mat-raised-button color="primary" class="m-auto" (click)="openDialog()">Crear curso</button>
+<app-create></app-create>
