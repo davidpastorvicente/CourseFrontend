@@ -1,9 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { CreateComponent } from '../create/create.component';
 import { Curso } from '../models/curso';
 import { MatDialog } from '@angular/material/dialog';
-import {MatTable} from '@angular/material/table';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-show',
@@ -12,15 +14,22 @@ import {MatTable} from '@angular/material/table';
 })
 export class ShowComponent implements OnInit {
 
-  @ViewChild(MatTable) table: MatTable<Curso[]>;
-  cursos: Curso[];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   headers = ['titulo', 'profesor', 'nivel', 'horas'];
+  cursos: Curso[] = [];
+  dataSource: MatTableDataSource<Curso>;
 
   constructor(private http: HttpService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.http.getCursos().subscribe(cursos =>
-      this.cursos = cursos.filter(curso => curso.activo));
+    this.http.getCursos().subscribe(cursos => {
+        this.cursos = cursos.filter(curso => curso.activo);
+        this.dataSource = new MatTableDataSource<Curso>(this.cursos);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+    });
 
     this.http.newCurso.subscribe(curso => this.addCurso(curso));
   }
@@ -32,7 +41,7 @@ export class ShowComponent implements OnInit {
   addCurso(curso: Curso): void {
     if (curso.activo) {
       this.cursos.push(curso);
-      this.table.renderRows();
+      this.dataSource.data = this.cursos;
     }
   }
 }

@@ -16,7 +16,7 @@
     <div class="col-sm-7">
       <mat-form-field appearance="outline" class="d-block">
         <mat-label>Profesor</mat-label>
-        <mat-select (valueChange)="chooseProfesor($event)">
+        <mat-select (valueChange)="curso.profesor = profesores[$event]">
           <mat-option *ngFor="let profesor of profesores; let i = index" value={{i}}>
             {{profesor.nombre + ' ' + profesor.apellido}}
           </mat-option>
@@ -38,14 +38,14 @@
     <div class="col-4">
       <mat-form-field appearance="outline" class="d-block">
         <mat-label>Horas</mat-label>
-        <input matInput [(ngModel)]="curso.horas" name="horas" type="number" value=25>
+        <input matInput [(ngModel)]="curso.horas" name="horas" type="number">
       </mat-form-field>
     </div>
 
     <div class="col-8">
       <mat-form-field appearance="outline" class="d-block">
         <mat-label>Temario</mat-label>
-        <input matInput (click)="fileInput.click()" name="horas" value={{fileName}} class="file" readonly>
+        <input matInput (click)="fileInput.click()" name="horas" value={{getFileName()}} class="file" readonly>
         <input hidden (change)="onFileSelected($event)" #fileInput type="file">
         <mat-icon matSuffix>folder</mat-icon>
       </mat-form-field>
@@ -54,6 +54,6 @@
 </div>
 
 <div mat-dialog-actions class="justify-content-center">
-  <button mat-raised-button color="accent" (click)="close()">Cancelar</button>
+  <button mat-raised-button color="accent" (click)="this.dialogRef.close()">Cancelar</button>
   <button mat-raised-button color="primary" (click)="create()">Crear</button>
 </div>

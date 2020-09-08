@@ -11,19 +11,15 @@ import { Profesor } from '../models/profesor';
 })
 export class CreateComponent implements OnInit {
 
-  profesores: Profesor[];
-  curso: Curso = new Curso();
-  fileName = 'Seleccione un archivo';
   niveles = ['Básico', 'Intermedio', 'Avanzado'];
+  curso: Curso = new Curso();
+  profesores: Profesor[];
+  temario: File;
 
   constructor(private http: HttpService, public dialogRef: MatDialogRef<CreateComponent>) { }
 
   ngOnInit(): void {
     this.http.getProfesores().subscribe(profesores => this.profesores = profesores);
-  }
-
-  close(): void {
-    this.dialogRef.close();
   }
 
   create(): void {
@@ -32,10 +28,10 @@ export class CreateComponent implements OnInit {
   }
 
   onFileSelected(event): void {
-    this.fileName = event.target.files[0].name;
+    this.temario = event.target.files[0];
   }
 
-  chooseProfesor(index): void {
-    this.curso.profesor = this.profesores[index];
+  getFileName(): string {
+    return this.temario ? this.temario.name : 'Seleccione un archivo';
   }
 }
