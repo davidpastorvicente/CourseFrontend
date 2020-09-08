@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { HttpService } from '../services/http.service';
+import { CreateComponent } from '../create/create.component';
 import { Curso } from '../models/curso';
-import {CreateComponent} from '../create/create.component';
 import { MatDialog } from '@angular/material/dialog';
+import {MatTable} from '@angular/material/table';
 
 @Component({
   selector: 'app-show',
@@ -11,24 +12,27 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class ShowComponent implements OnInit {
 
+  @ViewChild(MatTable) table: MatTable<Curso[]>;
   cursos: Curso[];
   headers = ['titulo', 'profesor', 'nivel', 'horas'];
 
-  constructor(private http: HttpService, public dialog: MatDialog) { }
+  constructor(private http: HttpService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.http.getCursos().subscribe(cursos =>
       this.cursos = cursos.filter(curso => curso.activo));
+
+    this.http.newCurso.subscribe(curso => this.addCurso(curso));
   }
 
   openDialog(): void {
-    const dialog = this.dialog.open(CreateComponent);
-    dialog.afterClosed().subscribe(curso => this.add(curso));
+    this.dialog.open(CreateComponent);
   }
 
-  add(curso: Curso): void {
+  addCurso(curso: Curso): void {
     if (curso.activo) {
       this.cursos.push(curso);
+      this.table.renderRows();
     }
   }
 }

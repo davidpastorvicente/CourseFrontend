@@ -1,8 +1,59 @@
-<h1 mat-dialog-title>Añadir un curso</h1>
+<h1 mat-dialog-title class="m-0">Añadir un curso</h1>
+
 <div mat-dialog-content>
-  <mat-checkbox class="example-margin">Activo</mat-checkbox>
+  <div class="mt-2 mb-3 d-flex justify-content-end">
+    <mat-checkbox [(ngModel)]="curso.activo" name="activo" class="ml-2">Activo</mat-checkbox>
+  </div>
+
+  <div>
+    <mat-form-field appearance="outline" class="d-block">
+      <mat-label>Título</mat-label>
+      <input matInput [(ngModel)]="curso.titulo" name="titulo" placeholder="Introduzca el título del curso">
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-7">
+      <mat-form-field appearance="outline" class="d-block">
+        <mat-label>Profesor</mat-label>
+        <mat-select (valueChange)="chooseProfesor($event)">
+          <mat-option *ngFor="let profesor of profesores; let i = index" value={{i}}>
+            {{profesor.nombre + ' ' + profesor.apellido}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="col-sm-5">
+      <mat-form-field appearance="outline" class="d-block">
+        <mat-label>Nivel</mat-label>
+        <mat-select [(ngModel)]="curso.nivel" name="nivel">
+          <mat-option *ngFor="let nivel of niveles" value={{nivel}}>{{nivel}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-4">
+      <mat-form-field appearance="outline" class="d-block">
+        <mat-label>Horas</mat-label>
+        <input matInput [(ngModel)]="curso.horas" name="horas" type="number" value=25>
+      </mat-form-field>
+    </div>
+
+    <div class="col-8">
+      <mat-form-field appearance="outline" class="d-block">
+        <mat-label>Temario</mat-label>
+        <input matInput (click)="fileInput.click()" name="horas" value={{fileName}} class="file" readonly>
+        <input hidden (change)="onFileSelected($event)" #fileInput type="file">
+        <mat-icon matSuffix>folder</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
 </div>
-<div mat-dialog-actions>
+
+<div mat-dialog-actions class="justify-content-center">
   <button mat-raised-button color="accent" (click)="close()">Cancelar</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="curso">Crear</button>
+  <button mat-raised-button color="primary" (click)="create()">Crear</button>
 </div>

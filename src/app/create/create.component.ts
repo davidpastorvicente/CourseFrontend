@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {MatDialogRef} from '@angular/material/dialog';
-import {Curso} from '../models/curso';
-import {HttpService} from '../services/http.service';
-import {Profesor} from '../models/profesor';
+import { MatDialogRef } from '@angular/material/dialog';
+import { HttpService } from '../services/http.service';
+import { Curso } from '../models/curso';
+import { Profesor } from '../models/profesor';
 
 @Component({
   selector: 'app-create',
@@ -12,7 +12,9 @@ import {Profesor} from '../models/profesor';
 export class CreateComponent implements OnInit {
 
   profesores: Profesor[];
-  curso: Curso;
+  curso: Curso = new Curso();
+  fileName = 'Seleccione un archivo';
+  niveles = ['Básico', 'Intermedio', 'Avanzado'];
 
   constructor(private http: HttpService, public dialogRef: MatDialogRef<CreateComponent>) { }
 
@@ -22,5 +24,18 @@ export class CreateComponent implements OnInit {
 
   close(): void {
     this.dialogRef.close();
+  }
+
+  create(): void {
+    this.http.postCursos(this.curso);
+    this.dialogRef.close();
+  }
+
+  onFileSelected(event): void {
+    this.fileName = event.target.files[0].name;
+  }
+
+  chooseProfesor(index): void {
+    this.curso.profesor = this.profesores[index];
   }
 }
