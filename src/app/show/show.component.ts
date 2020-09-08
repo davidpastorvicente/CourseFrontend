@@ -1,18 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../services/http.service';
 import { CreateComponent } from '../create/create.component';
 import { Curso } from '../models/curso';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-show',
   templateUrl: './show.component.html',
   styleUrls: ['./show.component.sass']
 })
-export class ShowComponent implements OnInit {
+export class ShowComponent implements OnInit, OnDestroy {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,6 +32,10 @@ export class ShowComponent implements OnInit {
     });
 
     this.http.newCurso.subscribe(curso => this.addCurso(curso));
+  }
+
+  ngOnDestroy(): void {
+    this.http.newCurso.unsubscribe();
   }
 
   openDialog(): void {
