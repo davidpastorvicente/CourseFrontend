@@ -17,15 +17,20 @@ export class HttpService {
     return this.http.get<Curso[]>(this.url + '/cursos');
   }
 
-  postCursos(curso: Curso): void {
-    this.http.post<number>(this.url + '/cursos/', curso)
-      .subscribe(id => {
-        curso.id = id;
-        this.newCurso.next(curso);
-      });
+  postCurso(curso: Curso): Observable<number> {
+    return this.http.post<number>(this.url + '/cursos', curso);
   }
 
   getProfesores(): Observable<Profesor[]> {
     return this.http.get<Profesor[]>(this.url + '/profesores');
+  }
+
+  postTemario(temario: File, curso: Curso): void {
+    const form = new FormData();
+    form.append('id', curso.id.toString());
+    form.append('temario', temario);
+
+    this.http.post<Curso>(this.url + '/temarios', form)
+      .subscribe(() => this.newCurso.next(curso));
   }
 }

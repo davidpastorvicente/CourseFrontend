@@ -12,7 +12,7 @@
 
     <ng-container matColumnDef="nivel">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Nivel </th>
-      <td mat-cell *matCellDef="let c"> {{c.nivel}} </td>
+      <td mat-cell *matCellDef="let curso"> {{curso.nivel}} </td>
     </ng-container>
 
     <ng-container matColumnDef="horas">
@@ -20,11 +20,19 @@
       <td mat-cell *matCellDef="let curso"> {{curso.horas}} </td>
     </ng-container>
 
+    <ng-container matColumnDef="temario">
+      <th mat-header-cell *matHeaderCellDef> Temario </th>
+      <td mat-cell *matCellDef="let curso">
+        <a *ngIf="curso.temario" href="{{getUrl(curso.temario)}}"><mat-icon>cloud_download</mat-icon></a>
+        <i *ngIf="!curso.temario">No disponible</i>
+      </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="headers"></tr>
     <tr mat-row *matRowDef="let row; columns: headers;"></tr>
   </table>
 
-  <mat-paginator [pageSize]="5" showFirstLastButtons></mat-paginator>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
 </div>
 
 <!-- Crear un curso -->

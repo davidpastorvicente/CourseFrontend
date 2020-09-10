@@ -6,5 +6,6 @@ export class Curso {
   horas: number;
   activo: boolean;
   nivel: string;
+  temario: string;
   profesor: Profesor;
 }

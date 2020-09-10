@@ -14,7 +14,7 @@ export class CreateComponent implements OnInit {
   niveles = ['Básico', 'Intermedio', 'Avanzado'];
   curso: Curso = new Curso();
   profesores: Profesor[];
-  temario: File;
+  temarioFile: File;
 
   constructor(private http: HttpService, public dialogRef: MatDialogRef<CreateComponent>) { }
 
@@ -23,15 +23,21 @@ export class CreateComponent implements OnInit {
   }
 
   create(): void {
-    this.http.postCursos(this.curso);
+    this.http.postCurso(this.curso).subscribe(id => {
+      this.curso.id = id;
+      this.temarioFile ?
+        this.http.postTemario(this.temarioFile, this.curso) :
+        this.http.newCurso.next(this.curso);
+    });
     this.dialogRef.close();
   }
 
   onFileSelected(event): void {
-    this.temario = event.target.files[0];
+    this.temarioFile = event.target.files[0];
+    this.curso.temario = this.temarioFile.name;
   }
 
   getFileName(): string {
-    return this.temario ? this.temario.name : 'Seleccione un archivo';
+    return this.temarioFile ? this.curso.temario : 'Seleccione un archivo';
   }
 }

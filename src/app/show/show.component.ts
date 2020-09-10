@@ -17,9 +17,10 @@ export class ShowComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  headers = ['titulo', 'profesor', 'nivel', 'horas'];
+  headers = ['titulo', 'profesor', 'nivel', 'horas', 'temario'];
   cursos: Curso[] = [];
   dataSource: MatTableDataSource<Curso>;
+  urlTemario = 'http://localhost:8080/temarios/';
 
   constructor(private http: HttpService, private dialog: MatDialog) { }
 
@@ -47,5 +48,9 @@ export class ShowComponent implements OnInit, OnDestroy {
       this.cursos.push(curso);
       this.dataSource.data = this.cursos;
     }
+  }
+
+  getUrl(temario: string): string {
+    return this.urlTemario + temario;
   }
 }
