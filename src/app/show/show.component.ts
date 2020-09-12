@@ -26,7 +26,9 @@ export class ShowComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.http.getCursos().subscribe(cursos => {
-        this.cursos = cursos.filter(curso => curso.activo);
+        this.cursos = cursos.filter(curso => curso.activo)
+                            .sort((a, b) => a.id > b.id ? 1 : -1);
+
         this.dataSource = new MatTableDataSource<Curso>(this.cursos);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
