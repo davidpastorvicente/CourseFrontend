@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +35,7 @@ import { MatSortModule } from '@angular/material/sort';
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
+    HttpClientTestingModule,
     BrowserAnimationsModule,
     NgbModule,
     MatToolbarModule,
@@ -49,7 +51,6 @@ import { MatSortModule } from '@angular/material/sort';
     MatPaginatorModule,
     MatSortModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
